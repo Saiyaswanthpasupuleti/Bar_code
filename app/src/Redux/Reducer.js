@@ -22,19 +22,31 @@ export const reducer = createSlice({
 
 })
 
-
 export const MyBill=createSlice({
     name:"bill",
-    initialState:[],
+    initialState: localStorage.getItem("billItems") ? JSON.parse(localStorage.getItem("billItems")) : [],
     reducers:{
         addToBill:(state,action)=>{
             state.push(action.payload);
-            const prev=JSON.parse(localStorage.getItem("billItems")) || [];
-            const updated= [...prev, action.payload];
-            localStorage.setItem("billItems", JSON.stringify(updated));
+            // const prev=JSON.parse(localStorage.getItem("billItems")) || [];
+            // const updated= [...prev, action.payload];
+            // localStorage.setItem("billItems", JSON.stringify(updated));
+                  const updated = [...state]; 
+      localStorage.setItem("billItems", JSON.stringify(updated));
            
             
         },
+       
+        removeItem:(state,action)=>{
+            // const itemIdtoremove=action.payload;
+            const updatedItems=state.filter(item=>item.itemId!==action.payload);
+localStorage.setItem("billItems",JSON.stringify(updatedItems))
+            // state.itemId!=
+            return updatedItems;
+
+        }
+        ,
+
        
         clearBill:(state,action)=>{
             
@@ -45,7 +57,7 @@ export const MyBill=createSlice({
     }
 })
 
-export const {addToBill,clearBill} = MyBill.actions;
+export const {addToBill,clearBill,removeItem} = MyBill.actions;
 
 export const {login,logout} = reducer.actions;
 export const MyMainReducer= reducer.reducer;

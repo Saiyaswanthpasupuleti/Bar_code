@@ -25,10 +25,12 @@ function LandingPage() {
 
     const {data}=useGetPostsQuery(barcode);
       const product = data?.products?.[0];
-    //   console.log("Product data:", product);
-
+      console.log(product);
+     
+const MainItemId=product?.id
 const handleAddToBill = () => {
   const item = {
+    itemId:MainItemId,
     id: barcode,
     name: product.product_name || 'N/A',
     brand: product.brands === "Heinz" ? "N/A" : product.brands || "N/A",
@@ -40,7 +42,7 @@ const handleAddToBill = () => {
   };
 
 
-
+{console.log(item)}
   dispatch(addToBill(item)); 
 
 
@@ -109,6 +111,8 @@ onUpdate={(err,result)=>{
       </form>
 
 
+{/* { console.log("Product data:", product?.id)} */}
+{/* {console.log(product)} */}
  {product && (
         <div className="mt-3">
           <h5>Product Found:</h5>
